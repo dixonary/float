@@ -17,16 +17,21 @@ class PlayState extends FlxState
     inline private static var TILES_Y:Int = 30;
 
     var water:WaterAutomaton;
+    var ball:Ball;
     /**
      * Function that is called up when to state is created to set it up.
      */
     override public function create():Void
     {
         FlxG.mouse.useSystemCursor = true;
+        FlxG.fixedTimestep = false;
         super.create();
 
         water = new WaterAutomaton();
         add(water);
+
+        ball = new Ball();
+        add(ball);
     }
 
     /**

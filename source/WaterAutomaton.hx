@@ -8,6 +8,7 @@ class WaterAutomaton extends FlxSprite
     static inline var WIDTH:Int = 100;
     static inline var HEIGHT:Int = 100;
     static inline var RANGE:Int = 127;
+    static inline var CELL_SIZE:Int = 10;
     var map:Array<Array<Int>> = [];
 
     public function new() {
@@ -19,6 +20,7 @@ class WaterAutomaton extends FlxSprite
             }
         }
         makeGraphic(WIDTH, HEIGHT, 0xFF<<24);
+        this.scale = new flixel.util.FlxPoint(CELL_SIZE, CELL_SIZE);
     }
 
     public override function update():Void {
@@ -80,8 +82,7 @@ class WaterAutomaton extends FlxSprite
         for (i in 0 ... WIDTH) {
             for (j in 0 ... HEIGHT) {
                 var c = map[i][j] + RANGE;
-                FlxSpriteUtil.drawRect(this, i, j, 1, 1,
-                                       (0xFF << 24) + c * 0x10101);
+                FlxSpriteUtil.drawRect(this, i, j, 1, 1, 0xFF000000 + c * 0x10101);
             }
         }
         super.draw();
