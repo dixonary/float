@@ -13,9 +13,6 @@ import flixel.util.FlxMath;
 class PlayState extends FlxState
 {
 
-    inline private static var TILES_X:Int = 30;
-    inline private static var TILES_Y:Int = 30;
-
     var water:WaterAutomaton;
     var ball:Ball;
     /**
@@ -23,6 +20,7 @@ class PlayState extends FlxState
      */
     override public function create():Void
     {
+
         FlxG.mouse.useSystemCursor = true;
         FlxG.fixedTimestep = false;
         super.create();

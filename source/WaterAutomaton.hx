@@ -15,7 +15,7 @@ class WaterAutomaton extends FlxGroup
     static inline var WIDTH:Int = 100;
     static inline var HEIGHT:Int = 100;
     static inline var RANGE:Int = 127;
-    static inline var CELL_SIZE:Int = 25;
+    static inline var CELL_SIZE:Int = 5;
     var lastMap:Array<Array<Cell>> = [];
     var map:Array<Array<Cell>> = [];
 
@@ -47,6 +47,7 @@ class WaterAutomaton extends FlxGroup
             map[i] = [];
             for (j in 0 ... HEIGHT) {
                 map[i][j] = 0;
+                drawCell(i, j);
             }
         }
     }
@@ -87,10 +88,10 @@ class WaterAutomaton extends FlxGroup
             } else {
                 nbar += oldCell;
             }
-            nbar = Std.int(nbar / 2);
-            newCell = nbar - oldCell;
-            newCell = Std.int(FlxMath.bound(newCell, -RANGE, RANGE));
         }
+        nbar = Std.int(nbar / 2);
+        newCell = nbar - oldCell;
+        newCell = Std.int(FlxMath.bound(newCell, -RANGE, RANGE));
 
         return newCell;
     }
