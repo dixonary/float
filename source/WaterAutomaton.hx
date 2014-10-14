@@ -15,13 +15,15 @@ class WaterAutomaton extends FlxSprite
 
     public function new() {
         super();
+        makeGraphic(WIDTH, HEIGHT, 0xFF<<24);
+
         for (i in 0 ... WIDTH) {
             map[i] = [];
             for (j in 0 ... HEIGHT) {
                 map[i][j] = 0;
+                drawCell(i, j);
             }
         }
-        makeGraphic(WIDTH, HEIGHT, 0xFF<<24);
         this.scale = new flixel.util.FlxPoint(CELL_SIZE, CELL_SIZE);
     }
 
@@ -58,7 +60,7 @@ class WaterAutomaton extends FlxSprite
                 }
 
                 if(map[i][j] != lastMap[i][j]) {
-                    //drawCell(i, j);
+                    drawCell(i, j);
                 }
             }
         }
@@ -91,15 +93,5 @@ class WaterAutomaton extends FlxSprite
             neighbours[3] = lastMap[_i][_j + 1];
         }
         return neighbours;
-    }
-
-    public override function draw():Void {
-        for (i in 0 ... WIDTH) {
-            for (j in 0 ... HEIGHT) {
-                var c = map[i][j] + RANGE;
-                FlxSpriteUtil.drawRect(this, i, j, 1, 1, 0xFF000000 + c * 0x10101);
-            }
-        }
-        super.draw();
     }
 }
