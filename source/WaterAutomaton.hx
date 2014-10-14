@@ -21,7 +21,7 @@ class WaterAutomaton extends FlxGroup
 
     var tiles:FlxTilemap;
 
-    public function new() {
+    public function new(_x:Int = 200, _y:Int = 200) {
         super();
 
         //Initialise tilemap
@@ -40,6 +40,7 @@ class WaterAutomaton extends FlxGroup
         tiles = new FlxTilemap().loadMap(tilemapInitStr, "assets/images/tiles.png", 1, 1);
         tiles.scale.x =
         tiles.scale.y = CELL_SIZE;
+        tiles.x = _x; tiles.y = _y;
         add(tiles);
 
         for (i in 0 ... WIDTH) {
@@ -52,7 +53,9 @@ class WaterAutomaton extends FlxGroup
 
     public override function update():Void {
         if (FlxG.mouse.pressed) {
-            triggerWave(20,20);
+            var cellX = Std.int((FlxG.mouse.screenX - tiles.x) / CELL_SIZE);
+            var cellY = Std.int((FlxG.mouse.screenY - tiles.y) / CELL_SIZE);
+            triggerWave(cellX,cellY);
         }
 
         lastMap = map;
