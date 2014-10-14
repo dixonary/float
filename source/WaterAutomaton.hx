@@ -97,8 +97,7 @@ class WaterAutomaton extends FlxSprite
         for (i in 0 ... WIDTH) {
             for (j in 0 ... HEIGHT) {
                 var c = map[i][j] + RANGE;
-                FlxSpriteUtil.drawRect(this, i, j, 1, 1,
-                                       (0xFF << 24) + c * 0x10101);
+                FlxSpriteUtil.drawRect(this, i, j, 1, 1, 0xFF000000 + c * 0x10101);
             }
         }
         super.draw();

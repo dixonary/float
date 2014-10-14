@@ -39,8 +39,8 @@ class GameClass extends FlxGame
             var updateFPS:Int = 30;
             var renderFPS:Int = 30;
         #else
-            var updateFPS:Int = 120;
-            var renderFPS:Int = 120;
+            var updateFPS:Int = 60;
+            var renderFPS:Int = 60;
         #end
 
         Lib.current.stage.addEventListener(KeyboardEvent.KEY_UP, keyReleased);
