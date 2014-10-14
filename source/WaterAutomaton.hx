@@ -54,8 +54,8 @@ class WaterAutomaton extends FlxGroup
 
     public override function update():Void {
         if (FlxG.mouse.pressed) {
-            var cellX = Std.int((FlxG.mouse.screenX - tiles.x) / CELL_SIZE);
-            var cellY = Std.int((FlxG.mouse.screenY - tiles.y) / CELL_SIZE);
+            var cellX = Std.int((FlxG.mouse.getWorldPosition().x - tiles.x) / CELL_SIZE);
+            var cellY = Std.int((FlxG.mouse.getWorldPosition().y - tiles.y) / CELL_SIZE);
             triggerWave(cellX,cellY);
         }
 
@@ -76,10 +76,27 @@ class WaterAutomaton extends FlxGroup
 
     function drawCell(_i, _j) {
         var c = map[_i][_j] + RANGE;
-        tiles.setTile(_j, _i, c);
+        tiles.setTile(_i, _j, c);
     }
 
     function zed0rule(oldCell:Cell, ns: Neighbours):Cell {
+        var newCell:Cell;
+        var nbar:Cell = 0;
+        for (n in ns) {
+            if (n != null) {
+                nbar += n;
+            } else {
+                nbar += oldCell;
+            }
+        }
+        nbar = Std.int(nbar / 2);
+        newCell = nbar - oldCell;
+        newCell = Std.int(FlxMath.bound(newCell, -RANGE, RANGE));
+
+        return newCell;
+    }
+
+    function alexrule(oldCell:Cell, ns: Neighbours):Cell {
         var newCell:Cell;
         var nbar:Cell = 0;
         for (n in ns) {
