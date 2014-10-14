@@ -4,11 +4,13 @@ import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.util.FlxMath;
 import flixel.util.FlxSpriteUtil;
+import flixel.tile.FlxTilemap;
+import flixel.group.FlxGroup;
 
 typedef Cell = Int;
 typedef Neighbours = Array<Null<Cell>>;
 
-class WaterAutomaton extends FlxSprite
+class WaterAutomaton extends FlxGroup
 {
     static inline var WIDTH:Int = 100;
     static inline var HEIGHT:Int = 100;
@@ -17,18 +19,35 @@ class WaterAutomaton extends FlxSprite
     var lastMap:Array<Array<Cell>> = [];
     var map:Array<Array<Cell>> = [];
 
+    var tiles:FlxTilemap;
+
     public function new() {
         super();
-        makeGraphic(WIDTH, HEIGHT, 0xFF<<24);
+
+        //Initialise tilemap
+        var tilemapInitStr = "";
+        for(i in 0 ... HEIGHT) {
+            for (j in 0 ... WIDTH) {
+                tilemapInitStr += "0";
+                if(j < WIDTH-1) {
+                    tilemapInitStr += ",";
+                }
+            }
+            if(i < HEIGHT-1) {
+                tilemapInitStr += "\n";
+            }
+        }
+        tiles = new FlxTilemap().loadMap(tilemapInitStr, "assets/images/tiles.png", 1, 1);
+        tiles.scale.x =
+        tiles.scale.y = CELL_SIZE;
+        add(tiles);
 
         for (i in 0 ... WIDTH) {
             map[i] = [];
             for (j in 0 ... HEIGHT) {
                 map[i][j] = 0;
-                drawCell(i, j);
             }
         }
-        this.scale = new flixel.util.FlxPoint(CELL_SIZE, CELL_SIZE);
     }
 
     public override function update():Void {
@@ -53,8 +72,7 @@ class WaterAutomaton extends FlxSprite
 
     function drawCell(_i, _j) {
         var c = map[_i][_j] + RANGE;
-        FlxSpriteUtil.drawRect(this, _i, _j, 1, 1,
-                               (0xFF << 24) + c * 0x10101);
+        tiles.setTile(_j, _i, c);
     }
 
     function zed0rule(oldCell:Cell, ns: Neighbours):Cell {
