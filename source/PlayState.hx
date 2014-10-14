@@ -12,12 +12,21 @@ import flixel.util.FlxMath;
  */
 class PlayState extends FlxState
 {
+
+	inline private static var TILES_X:Int = 30;
+	inline private static var TILES_Y:Int = 30;
+	
+	var tmap:TMap;
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
 	{
 		super.create();
+
+		tmap = new TMap(TILES_X, TILES_Y);
+		add(tmap);
+
 	}
 	
 	/**
